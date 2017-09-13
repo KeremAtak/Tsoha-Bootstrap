@@ -1,1 +1,1 @@
--- Lisää INSERT INTO lauseet tähän tiedostoon
+INSERT INTO Alcoholic (username, password) VALUES ('Kalle', 'salasana');
