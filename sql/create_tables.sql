@@ -6,8 +6,8 @@ CREATE TABLE Alcoholic(
 
 CREATE TABLE Ingredient(
 	id SERIAL PRIMARY KEY,
-	name varchar(50) NOT NULL
-	alcohol_percentage INTEGER(100) NOT NULL,
+	name varchar(50) NOT NULL,
+	alcohol_percentage INTEGER,
 	description varchar(500)
 );
 
@@ -15,8 +15,8 @@ CREATE TABLE Drink(
 	id SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES Alcoholic(id),
 	name varchar(50) NOT NULL,
-	volume INTEGER(10000) NOT NULL,
-	alcohol_percentage INTEGER(100) NOT NULL,
+	volume INTEGER,
+	alcohol_percentage INTEGER,
 	description varchar(500)
 );
 
