@@ -18,7 +18,7 @@
 
 [Yksittäinen ainesosa](http://atak.users.cs.helsinki.fi/tsoha/ingredients/ingredient)
 
-[Käyttäjät](http://atak.users.cs.helsinki.fi/tsoha/users/)
+[Käyttäjät](http://atak.users.cs.helsinki.fi/tsoha/users)
 
 [Yksittäinen käyttäjä](http://atak.users.cs.helsinki.fi/tsoha/users/user)
 
