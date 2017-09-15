@@ -9,9 +9,9 @@
     public static function drink(){
         View::make('drink.html');
     }
-    
+        
     public static function reviews(){
-        View:make('reviews.html');
+        View::make('reviews.html');
     }
     
     public static function create_drink(){
