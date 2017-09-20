@@ -2,14 +2,12 @@
 
 {% block content %}
 <h1>Käyttäjät</h1>
-    
-    <p>
-        <a href="/tsoha/users/user">Kyösti</a>
-    </p>     
-    <p>
-        <a href="/tsoha/users/user">Pete</a>
-    </p> 
-    
+   
+    {% for user in users %}
+        <p>
+            <a href="/tsoha/users/{{user.id}}">{{user.username}}</a>
+        </p>
+    {% endfor %}
     <a href="/tsoha"><small>Valikkoon</small></a>
 
 {% endblock %}

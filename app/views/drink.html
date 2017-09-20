@@ -1,27 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Drinkin nimi</h1>
-    
-    <h3>Arvosana: 3</h3>
-    
+        
+    <h1>{{drink.name}}</h1>
+
+    <h3>Arvosana: 3 (todo)</h3>
+
     <h3>Ainekset</h3>
 
-    <ul>
-        <li>Aines 1</li>
-        <li>Aines 2</li>
-    </ul>
+    
+    {% for ingredient in ingredients %}
+        <p>
+            <a href="/tsoha/ingredients/{{ingredient.id}}">{{ingredient.name}}</a>
+        </p>
+    {% endfor %}
     
 
-    <h4>Alkoholiprosentti: 80%</h4>
+    <h4>{{drink.alcohol_percentage}}</h4>
 
-    <h4>Kuvaus</h4>
+    <h4>{{drink.description}}</h4>
 
-    <h4>Drinkin teki: nimi</h4>
-    
-    
-    <a href="/tsoha/drinks/drink/reviews"><h4>Arvostelut</h4></a>
-    
+    <h4>Drinkin teki: nimi (todo)</h4>
+     
+    <a href="/tsoha/drinks/{{ingredient.id}}/reviews"><h5>Arvostelut</h5></a>
+
     <a href="/tsoha/drinks"><small>Drinkkeihin</small></a>
 
 {% endblock %}

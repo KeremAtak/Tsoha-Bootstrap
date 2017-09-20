@@ -1,13 +1,18 @@
 <?php
 
+  require 'app/models/ingredient.php';
   class IngredientController extends BaseController{
 
     public static function ingredients(){
-   	  View::make('ingredients.html');
+        $ingredients = Ingredient::all();
+        
+   	View::make('ingredients.html', array('ingredients' => $ingredients));
     }
     
-    public static function ingredient(){
-   	  View::make('ingredient.html');
+    public static function ingredient($id){
+        $ingredient = Ingredient::single($id);
+        
+        View::make('ingredient.html', array('ingredient' => $ingredient));
     }
     
   }

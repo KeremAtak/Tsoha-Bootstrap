@@ -2,14 +2,13 @@
 
 {% block content %}
 <h1>Drinkit</h1>
-    <p>
-        <a href="/tsoha/drinks/drink">Muorin maito</a>
-        <small>Arvosana: 5</small>
-    </p>     
-    <p>
-        <a href="/tsoha/drinks/drink">Jallukossu</a>
-        <small>Arvosana: 3.5</small>
-    </p> 
+    
+    {% for drink in drinks %}
+        <p>
+            <a href="/tsoha/drinks/{{drink.id}}">{{drink.name}}</a>
+            <small>Arvosana (todo)</small>
+        </p>
+    {% endfor %}
     
     <a href="/tsoha"><small>Valikkoon</small></a>
 

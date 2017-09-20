@@ -1,21 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Käyttäjät</h1>
+<h1>Ainesosat</h1>
     
-    <p>
-        <a href="/tsoha/ingredients/ingredient">Maito</a>
-        <small>Alkoholiprosentti: 0%</small>
-    </p>     
-    <p>
-        <a href="/tsoha/ingredients/ingredient">Lasol</a>
-        <small>Alkoholiprosentti: 80%</small>
-    </p> 
-    <p>
-        <a href="/tsoha/ingredients/ingredient">Marinol</a>
-        <small>Alkoholiprosentti: 90%</small>
-    </p> 
-    
+    {% for ingredient in ingredients %}
+        <p>
+            <a href="/tsoha/ingredients/{{ingredient.id}}">{{ingredient.name}}</a>
+            <small>{{ingredient.alcohol_percentage}}</small>
+        </p>
+    {% endfor %}
     
     <a href="/tsoha"><small>Valikkoon</small></a>
 

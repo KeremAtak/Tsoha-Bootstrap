@@ -16,12 +16,12 @@
     DrinkController::drinks();
   });
   
-  $routes->get('/drinks/drink', function() {
-    DrinkController::drink();
+  $routes->get('/drinks/:id', function($id) {
+    DrinkController::drink($id);
   });
   
-  $routes->get('/drinks/drink/reviews', function() {
-    DrinkController::reviews();
+  $routes->get('/drinks/:id/reviews', function($id) {
+    ReviewController::reviews($id);
   });
   
   $routes->get('/create', function() {
@@ -32,14 +32,14 @@
       IngredientController::ingredients();
   });
   
-  $routes->get('/ingredients/ingredient', function() {
-      IngredientController::ingredient();
+  $routes->get('/ingredients/:id', function($id) {
+      IngredientController::ingredient($id);
   });
   
   $routes->get('/users', function() {
     UserController::users();
   });
   
-    $routes->get('/users/user', function() {
-    UserController::user();
+    $routes->get('/users/:id', function($id) {
+    UserController::user($id);
   });
