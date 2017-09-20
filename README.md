@@ -1,5 +1,7 @@
 # Tietokantasovelluksen esittelysivu
 
+Aihe on oma versio Drinkkilistasta. Tarkempaa tietoa löytyy dokumentaatiosta.
+
 [Dokumentaatio](doc/dokumentaatio.pdf)
 
 [Sovelluksen indeksi](http://atak.users.cs.helsinki.fi/tsoha)
