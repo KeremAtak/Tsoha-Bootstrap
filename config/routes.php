@@ -24,6 +24,10 @@
     ReviewController::reviews($id);
   });
   
+  $routes->post('/drinks/:id/reviews', function($id) {
+    ReviewController::store($id);
+  });
+  
   $routes->get('/create', function() {
     DrinkController::create_drink();
   });

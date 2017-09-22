@@ -1,18 +1,34 @@
-{% extends "base.html" %}
+ {% extends "base.html" %}
 
 {% block content %}
-<h1>Ainesosan nimi</h1>
+
+    <h1>{{drink.name}}</h1>
     
-    <h1>Drinkin nimi</h1>
+    {% for review in reviews %}
+        
+        <h4>Arvostelija: {{review.reviewer}}</h4>
+        
+        <small>{{review.description}}</small>
+        <br>
+        <small>Arvosana: {{review.rating}}</small>
+    {% endfor %}
     
-    <h4>Arvostelija 1 nimi</h4>
+    <h3>Kirjoita oma arvostelu</h3>    
+
+    <form method = "post">
+        <div class="form-group">
+          <label>Kuvaus</label>
+          <input type="text" name = "description" class="form-control">
+        </div>
     
-    <small>kuvaus</small>
+        <div class="form-group">
+          <label>Arvosana</label>
+          <input type="text" name="rating" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Luo</button>
+    </form>
     
-    <h4>Arvostelija 2 nimi</h4>
-    
-    <small>kuvauskuvauskuvaus</small>
-    
-    <a href="/tsoha/drinks/drink"><small>Takaisin drinkkiin</small></a>
+    <a href="/tsoha/drinks/{{drink.id}}"><small>Takaisin drinkkiin</small></a>
 
 {% endblock %}

@@ -8,7 +8,6 @@
 
     <h3>Ainekset</h3>
 
-    
     {% for ingredient in ingredients %}
         <p>
             <a href="/tsoha/ingredients/{{ingredient.id}}">{{ingredient.name}}</a>
@@ -16,13 +15,13 @@
     {% endfor %}
     
 
-    <h4>{{drink.alcohol_percentage}}</h4>
+    <h4>Alkoholiprosentti: {{drink.alcohol_percentage}}%</h4>
+    
+    <h5>{{drink.description}}</h5>
 
-    <h4>{{drink.description}}</h4>
-
-    <h4>Drinkin teki: nimi (todo)</h4>
+    <h4>Drinkin teki {{user.username}}</h4>
      
-    <a href="/tsoha/drinks/{{ingredient.id}}/reviews"><h5>Arvostelut</h5></a>
+    <a href="/tsoha/drinks/{{drink.id}}/reviews"><h5>Arvostelut</h5></a>
 
     <a href="/tsoha/drinks"><small>Drinkkeihin</small></a>
 

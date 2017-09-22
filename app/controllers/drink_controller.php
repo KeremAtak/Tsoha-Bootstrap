@@ -2,6 +2,8 @@
     
   require 'app/models/drink.php';
   require 'app/models/ingredient.php';
+  require 'app/models/alcoholic.php';
+  
   class DrinkController extends BaseController{
 
     public static function drinks(){
@@ -13,8 +15,10 @@
     public static function drink($id){
         $drink = Drink::single($id);
         $ingredients = Ingredient::find_by_drink_id($id);
+        $alcoholic_id = Drink::find_alcoholic_id($id);
+        $user = Alcoholic::single($alcoholic_id);
         
-        View::make('drink.html', array('drink' => $drink, 'ingredients' => $ingredients));
+        View::make('drink.html', array('drink' => $drink, 'ingredients' => $ingredients, 'user' => $user));
     }
         
     

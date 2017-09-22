@@ -30,6 +30,7 @@ CREATE TABLE Review(
 	id SERIAL PRIMARY KEY,
 	alcoholic_id INTEGER REFERENCES Alcoholic(id),
 	drink_id INTEGER REFERENCES Drink(id),
+	reviewer varchar(30) NOT NULL,
 	rating DECIMAL(2,1),
 	description varchar(1500)
 );

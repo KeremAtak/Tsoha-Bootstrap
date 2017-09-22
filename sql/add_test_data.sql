@@ -8,7 +8,9 @@ INSERT INTO Ingredient (name, alcohol_percentage, description) VALUES ('Jaloviin
 
 INSERT INTO Ingredient (name, alcohol_percentage, description) VALUES ('Minttuviina', 40, 'Ei saanu laittaa jallupaukkuun!');
 
+INSERT INTO Ingredient (name, alcohol_percentage, description) VALUES ('Maito', 0, 'Tätä tulee lehmästä.');
+
 INSERT INTO Ingredient_Drink (ingredient_id, drink_id) VALUES (1, 1);
 INSERT INTO Ingredient_Drink (ingredient_id, drink_id) VALUES (2, 1);
 
-INSERT INTO Review (alcoholic_id, drink_id, rating, description) VALUES (1, 1, 4, 'Tää on hyvää');
+INSERT INTO Review (alcoholic_id, drink_id, reviewer, rating, description) VALUES (1, 1, 'Pate', 4, 'Tää on hyvää');

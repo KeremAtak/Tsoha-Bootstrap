@@ -6,7 +6,7 @@
     {% for ingredient in ingredients %}
         <p>
             <a href="/tsoha/ingredients/{{ingredient.id}}">{{ingredient.name}}</a>
-            <small>{{ingredient.alcohol_percentage}}</small>
+            <small>Alkoholiprosentti: {{ingredient.alcohol_percentage}}%</small>
         </p>
     {% endfor %}
     

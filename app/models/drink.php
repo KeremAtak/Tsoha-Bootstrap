@@ -69,4 +69,16 @@ class Drink extends BaseModel{
         }
         return $drinks;
     }
+    
+    public static function find_alcoholic_id($id) {
+        $query = DB::connection()->prepare('SELECT alcoholic_id FROM Drink WHERE id = :id');
+        $query->execute(array('id' => $id));
+
+        $row = $query->fetch();
+        
+        if($row) {
+            return $row['alcoholic_id'];
+        }
+        return null;
+    }
 }
