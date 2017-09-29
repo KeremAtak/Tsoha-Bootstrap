@@ -4,6 +4,8 @@ Aihe on oma versio Drinkkilistasta. Tarkempaa tietoa löytyy dokumentaatiosta.
 
 [Dokumentaatio](doc/dokumentaatio.pdf)
 
+[Käyttöohjeet](doc/kayttoohjeet.md)
+
 [Sovelluksen indeksi](http://atak.users.cs.helsinki.fi/tsoha)
 
 [Kirjautumissivu](http://atak.users.cs.helsinki.fi/tsoha/login)
