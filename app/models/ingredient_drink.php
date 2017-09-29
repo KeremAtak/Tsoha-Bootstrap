@@ -8,4 +8,9 @@ class Ingredient_Drink extends BaseModel{
         parent::__construct($attributes);
     }
     
+    public function save(){
+        $query = DB::connection()->prepare('INSERT INTO Ingredient_Drink (ingredient_id, drink_id)');
+
+        $query->execute(array('ingredient_id' => $this->ingredient_id, 'drink_id' => $this->drink_id));
+    }
 }

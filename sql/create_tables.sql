@@ -17,6 +17,7 @@ CREATE TABLE Drink(
 	name varchar(50) NOT NULL,
 	volume INTEGER,
 	alcohol_percentage DECIMAL,
+	rating DECIMAL(2,1),
 	description varchar(500)
 );
 
@@ -31,6 +32,6 @@ CREATE TABLE Review(
 	alcoholic_id INTEGER REFERENCES Alcoholic(id),
 	drink_id INTEGER REFERENCES Drink(id),
 	reviewer varchar(30) NOT NULL,
-	rating DECIMAL(2,1),
+	rating INTEGER,
 	description varchar(1500)
 );

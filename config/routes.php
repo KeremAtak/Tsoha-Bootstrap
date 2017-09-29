@@ -1,15 +1,27 @@
 <?php
-
+  
   $routes->get('/', function() {
     IndexController::index();
   });
 
   $routes->get('/login', function() {
-    IndexController::login();
+    LoginController::login();
+  });
+  
+  $routes->post('/login', function() {
+    LoginController::login_user();
+  });
+  
+  $routes->get('/logout', function() {
+    LoginController::logout();
   });
   
   $routes->get('/register', function() {
-    IndexController::register();
+    LoginController::register();
+  });
+  
+  $routes->post('/register', function() {
+    LoginController::register_new_user();
   });
   
   $routes->get('/drinks', function() {
@@ -24,12 +36,27 @@
     ReviewController::reviews($id);
   });
   
-  $routes->post('/drinks/:id/reviews', function($id) {
+   $routes->get('/drinks/:id/reviews/review', function($id) {
+      ReviewController::create_review($id);
+   });
+   
+   $routes->get('/drinks/:id/reviews/:review_id', function($id, $review_id) {
+      ReviewController::single_review($id, $review_id);
+   });
+  
+   $routes->get('/drinks/:id/reviews/:review_id/remove', function($id, $review_id){
+      ReviewController::remove($id, $review_id);
+   });
+  $routes->post('/drinks/:id/reviews/review', function($id) {
     ReviewController::store($id);
   });
   
   $routes->get('/create', function() {
     DrinkController::create_drink();
+  });
+  
+  $routes->post('/create', function() {
+    DrinkController::store();
   });
   
   $routes->get('/ingredients', function() {

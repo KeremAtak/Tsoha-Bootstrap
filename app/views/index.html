@@ -2,14 +2,22 @@
 
 {% block content %}
   <div class="page-header">
-    <h1>Tervetuloa Esson kapakkaan!</h1>
+    <h1>Esson kapakka</h1>
   </div>
+    
+  <h4>{{message}}</h4>
+
+  <h3>{{header}}</h3>
   
   <p>
     <a href="/tsoha/drinks">Drinkit</a>
-    <a href="/tsoha/users">Käyttäjät</a>
     <a href="/tsoha/create">Luo drinkki</a>
     <a href="/tsoha/ingredients">Ainekset</a>
-
+  </p>
+  
+  <p>
+      <a href="/tsoha/users">Käyttäjät</a>
+      <a href={{login_path}}>{{login_text}}</a>
+      <a href="{{register_path}}">{{register_text}}</a>
   </p>
 {% endblock %}

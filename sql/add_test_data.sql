@@ -2,7 +2,7 @@ INSERT INTO Alcoholic (username, password) VALUES ('Kalle', 'salasana');
 INSERT INTO Alcoholic (username, password) VALUES ('Pate', 'salasana');
 INSERT INTO Alcoholic (username, password) VALUES ('Esko', 'salasana');
 
-INSERT INTO Drink (alcoholic_id, name, volume, alcohol_percentage, description) VALUES (1, 'Jallupaukku', 60, 40.5, 'Perinteinen jallupaukku');
+INSERT INTO Drink (alcoholic_id, name, volume, alcohol_percentage, rating, description) VALUES (1, 'Jallupaukku', 60, 40.5, 1, 'Perinteinen jallupaukku');
 
 INSERT INTO Ingredient (name, alcohol_percentage, description) VALUES ('Jaloviina', 40.5, 'Jaloviina ei ole kirkasta');
 

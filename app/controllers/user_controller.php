@@ -17,4 +17,6 @@
         
         View::make('user.html', array('user' => $user, 'drinks' => $drinks));
     }
+    
+    
   }

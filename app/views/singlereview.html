@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Drinkin {{drink.name}} arvostelu</h1>
+    
+    <h3>Arvostelija: {{review.reviewer}}</h3>
+        
+    <h4>{{review.description}}</h4>
+    
+    <small>Arvosana: {{review.rating}}</small>
+    
+    <a href="/tsoha/drinks/{{drink.id}}/reviews/{{review.id}}/remove"><small>Poista arvostelu</small></a>
+    
+    <a href="/tsoha/drinks/{{drink.id}}/reviews"><small>Takaisin arvosteluihin</small></a>
+
+{% endblock %}
+

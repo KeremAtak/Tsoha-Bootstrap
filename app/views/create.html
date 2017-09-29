@@ -2,21 +2,56 @@
 
 {% block content %}
 <h1>Luo drinkki</h1>
-
-  <form>
+  
+  <h3>Lisää ainesosat</h3>
+  
+  <form method="post">
+    <select name="ingredient">
+      {% for ingredient in ingredients %}       
+          <option value="{{ingredient}}">{{ingredient.name}}</option>
+      {% endfor %}
+    </select>
+     
+    <div class="form-group">
+      <label>Määrä (ml)</label>
+      <input type="text" name="volume1" class="form-control">
+    </div>
+      
+      <select name="ingredient2">
+      {% for ingredient in ingredients %}       
+          <option value="{{ingredient}}" >{{ingredient.name}}</option>
+      {% endfor %}
+    </select>
+     
+    <div class="form-group">
+      <label>Määrä (ml)</label>
+      <input type="text" name="volume2" class="form-control">
+    </div>
+      
+     <select name="ingredient3">
+      {% for ingredient in ingredients %}       
+          <option value="{{ingredient}}">{{ingredient.name}}</option>
+      {% endfor %}
+    </select>
+     
+    <div class="form-group">
+      <label>Määrä (ml)</label>
+      <input type="text" name="volume3" class="form-control">
+    </div>
+    
     <div class="form-group">
       <label>Drinkin nimi</label>
-      <input type="text" class="form-control">
+      <input type="text" name="name" class="form-control">
     </div>
 
     <div class="form-group">
       <label>Kuvaus</label>
-      <input type="text" class="form-control">
+      <input type="text" name="description" class="form-control">
     </div>
 
     <button type="submit" class="btn btn-primary">Luo</button>
   </form>
 
-    <a href="/tsoha"><small>Valikkoon</small></a>
+  <a href="/tsoha"><small>Valikkoon</small></a>
 
 {% endblock %}

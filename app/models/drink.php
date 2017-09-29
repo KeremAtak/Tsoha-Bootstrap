@@ -81,4 +81,21 @@ class Drink extends BaseModel{
         }
         return null;
     }
+    
+    public function save(){
+        $query = DB::connection()->prepare('INSERT INTO Drink (alcoholic_id, name, volume, alcohol_percentage, description)
+                                    VALUES (:alcoholic_id, :name, :volume, :alcohol_percentage, :description) RETURNING id');
+
+        $query->execute(array('alcoholic_id' => $this->alcoholic_id, 'name' => $this->name, 'volume' => $this->volume, 
+                                'alcohol_percentage' => $this->alcohol_percentage, 'description' => $this->description));
+        $row = $query->fetch();
+
+        $this->id = $row['id'];
+    }
+    
+    public function update() {
+        $query = DB::connection()->prepare('UPDATE Drink SET rating = :rating WHERE id = :id');
+
+        $query->execute(array('rating' => $this->rating, 'id' => $this->id));
+    }
 }
