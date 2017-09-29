@@ -16,6 +16,8 @@ Aihe on oma versio Drinkkilistasta. Tarkempaa tietoa löytyy dokumentaatiosta.
 
 [Drinkin arvostelut](http://atak.users.cs.helsinki.fi/tsoha/drinks/1/reviews)
 
+[Yksittäinen arvostelu](http://atak.users.cs.helsinki.fi/tsoha/drinks/1/reviews/1)
+
 [Arvostelun luontisivu](http://atak.users.cs.helsinki.fi/tsoha/drinks/1/reviews/review)
 
 [Ainesosat](http://atak.users.cs.helsinki.fi/tsoha/ingredients)
