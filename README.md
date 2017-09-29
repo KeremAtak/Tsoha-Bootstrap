@@ -2,7 +2,11 @@
 
 Aihe on oma versio Drinkkilistasta. Tarkempaa tietoa löytyy dokumentaatiosta.
 
+Voit luoda käyttäjän rekisteröitymällä palveluun. Voit myös käyttää tietoja Username: Kalle, Password: salasana.
+
 [Dokumentaatio](doc/dokumentaatio.pdf)
+
+[Käyttöohjeet](doc/kayttoohjeet.md)
 
 [Sovelluksen indeksi](http://atak.users.cs.helsinki.fi/tsoha)
 
@@ -12,17 +16,21 @@ Aihe on oma versio Drinkkilistasta. Tarkempaa tietoa löytyy dokumentaatiosta.
 
 [Drinkit](http://atak.users.cs.helsinki.fi/tsoha/drinks)
 
-[Yksittäinen drinkki](http://atak.users.cs.helsinki.fi/tsoha/drinks/drink)
+[Yksittäinen drinkki](http://atak.users.cs.helsinki.fi/tsoha/drinks/1)
 
-[Drinkin arvostelut](http://atak.users.cs.helsinki.fi/tsoha/drinks/drink/reviews)
+[Drinkin arvostelut](http://atak.users.cs.helsinki.fi/tsoha/drinks/1/reviews)
+
+[Yksittäinen arvostelu](http://atak.users.cs.helsinki.fi/tsoha/drinks/1/reviews/1)
+
+[Arvostelun luontisivu](http://atak.users.cs.helsinki.fi/tsoha/drinks/1/reviews/review)
 
 [Ainesosat](http://atak.users.cs.helsinki.fi/tsoha/ingredients)
 
-[Yksittäinen ainesosa](http://atak.users.cs.helsinki.fi/tsoha/ingredients/ingredient)
+[Yksittäinen ainesosa](http://atak.users.cs.helsinki.fi/tsoha/ingredients/1)
 
 [Käyttäjät](http://atak.users.cs.helsinki.fi/tsoha/users)
 
-[Yksittäinen käyttäjä](http://atak.users.cs.helsinki.fi/tsoha/users/user)
+[Yksittäinen käyttäjä](http://atak.users.cs.helsinki.fi/tsoha/users/1)
 
-[Luomissivu](http://atak.users.cs.helsinki.fi/tsoha/create)
+[Drinkin luomissivu](http://atak.users.cs.helsinki.fi/tsoha/create)
 
