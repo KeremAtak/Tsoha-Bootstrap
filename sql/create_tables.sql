@@ -17,20 +17,20 @@ CREATE TABLE Drink(
 	name varchar(50) NOT NULL,
 	volume INTEGER,
 	alcohol_percentage DECIMAL,
-	rating DECIMAL(2,1),
+	rating DOUBLE PRECISION,
 	description varchar(500)
 );
 
 CREATE TABLE Ingredient_Drink(
 	ingredient_id INTEGER REFERENCES Ingredient(id),
-	drink_id INTEGER REFERENCES Drink(id)
+	drink_id INTEGER REFERENCES Drink(id) ON DELETE CASCADE
 );
 	
 
 CREATE TABLE Review(
 	id SERIAL PRIMARY KEY,
 	alcoholic_id INTEGER REFERENCES Alcoholic(id),
-	drink_id INTEGER REFERENCES Drink(id),
+	drink_id INTEGER REFERENCES Drink(id) ON DELETE CASCADE,
 	reviewer varchar(30) NOT NULL,
 	rating INTEGER,
 	description varchar(1500)

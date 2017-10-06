@@ -4,6 +4,8 @@
         
     <h1>{{drink.name}}</h1>
 
+    <h3>Drinkin teki {{user.username}}</h3 >
+    
     <h3>Arvosana: {{drink.rating}}</h3>
 
     <h3>Ainekset</h3>
@@ -17,12 +19,15 @@
 
     <h4>Alkoholiprosentti: {{drink.alcohol_percentage}}%</h4>
     
+    <h4>Tilavuus: {{drink.volume}}ml</h4>
+    
     <h5>{{drink.description}}</h5>
 
-    <h4>Drinkin teki {{user.username}}</h4>
-     
     <a href="/tsoha/drinks/{{drink.id}}/reviews"><h5>Arvostelut</h5></a>
+
+     <a href="/tsoha/drinks/{{drink.id}}/remove"><h5>{{path_text}}</h5></a>
 
     <a href="/tsoha/drinks"><small>Drinkkeihin</small></a>
 
+    <a href="/tsoha"><small>Valikkoon</small></a>
 {% endblock %}

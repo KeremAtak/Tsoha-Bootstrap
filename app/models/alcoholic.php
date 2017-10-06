@@ -9,7 +9,7 @@ class Alcoholic extends BaseModel{
     }
     
     public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Alcoholic');
+        $query = DB::connection()->prepare('SELECT * FROM Alcoholic ORDER BY username');
         $query->execute();
         
         $rows = $query->fetchAll();
@@ -42,7 +42,6 @@ class Alcoholic extends BaseModel{
         }
         return null;
     }
-    
     
     public static function authenticate($username, $password) {
         $query = DB::connection()->prepare('SELECT * FROM Alcoholic WHERE username = :username AND password = :password LIMIT 1');

@@ -15,9 +15,7 @@
   }
 
     public static function login() {
-        if (Alcoholic::is_logged_in()) {
-            
-        } else {
+        if (!Alcoholic::is_logged_in()) {
             View::make('login.html');
         }
     }
@@ -36,14 +34,14 @@
     }
     
     public static function logout(){
-        $_SESSION['user'] = null;
-        Redirect::to('/', array('message' => 'Olet kirjautunut ulos.'));
+        if(Alcoholic::is_logged_in()) {
+            $_SESSION['user'] = null;
+            Redirect::to('/', array('message' => 'Olet kirjautunut ulos.'));
+        }
     }
       
     public static function register() {
-        if (Alcoholic::is_logged_in()) {
-            
-        } else {
+        if (!Alcoholic::is_logged_in()) {
             View::make('register.html');
         }
     }

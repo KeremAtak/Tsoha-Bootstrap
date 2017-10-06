@@ -1,7 +1,9 @@
  {% extends "base.html" %}
 
 {% block content %}
-
+    
+    <h1>{{message}}</h1>
+    
     <h1>{{drink.name}}</h1>
     
     {% for review in reviews %}
@@ -16,4 +18,5 @@
 
     <a href="/tsoha/drinks/{{drink.id}}"><small>Takaisin drinkkiin</small></a>
 
+    <a href="/tsoha"><small>Valikkoon</small></a>
 {% endblock %}

@@ -32,6 +32,10 @@
     DrinkController::drink($id);
   });
   
+  $routes->get('/drinks/:id/remove', function($id) {
+    DrinkController::remove($id);
+  });
+  
   $routes->get('/drinks/:id/reviews', function($id) {
     ReviewController::reviews($id);
   });

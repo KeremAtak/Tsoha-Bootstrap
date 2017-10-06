@@ -9,7 +9,7 @@ class Ingredient extends BaseModel{
     }
     
     public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Ingredient');
+        $query = DB::connection()->prepare('SELECT * FROM Ingredient ORDER BY name');
         $query->execute();
         
         $rows = $query->fetchAll();
@@ -30,6 +30,24 @@ class Ingredient extends BaseModel{
      public static function single($id) {
         $query = DB::connection()->prepare('SELECT * FROM Ingredient WHERE id = :id');
         $query->execute(array('id' => $id));
+
+        $row = $query->fetch();
+        
+        if($row) {
+            $ingredient = new Ingredient(array(
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'alcohol_percentage' => $row['alcohol_percentage'],
+                'description' => $row['description']
+            ));
+            return $ingredient;
+        }
+        return null;
+    }
+    
+    public static function find_by_name($name) {
+        $query = DB::connection()->prepare('SELECT * FROM Ingredient WHERE name = :name');
+        $query->execute(array('name' => $name));
 
         $row = $query->fetch();
         

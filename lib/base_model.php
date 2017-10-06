@@ -14,15 +14,32 @@
         }
       }
     }
+    
+    public function validate_string_length($string, $length) {
+        $errors = array();
+        
+        if(strlen($string) > $length){
+          $errors[] = 'Merkkijono on liian pitkä (max ' . $length . ' merkkiä.)';
+        }
+        return $errors;
+    }
+    
+     public function string_not_null($string, $name) {
+        $errors = array();
+        
+        if(strlen($string) == 0){
+          $errors[] = $name .' on liian lyhyt.';
+        }
+        return $errors;
+    }
 
     public function errors(){
       // Lisätään $errors muuttujaan kaikki virheilmoitukset taulukkona
       $errors = array();
-
+      
       foreach($this->validators as $validator){
-        // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
-      }
-
+        $errors = array_merge($errors, $this->{$validator}());
+      } 
       return $errors;
     }
 
