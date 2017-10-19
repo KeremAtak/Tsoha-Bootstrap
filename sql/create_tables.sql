@@ -16,7 +16,7 @@ CREATE TABLE Drink(
 	alcoholic_id INTEGER REFERENCES Alcoholic(id),
 	name varchar(50) NOT NULL,
 	volume INTEGER,
-	alcohol_percentage DECIMAL,
+	alcohol_percentage DOUBLE PRECISION,
 	rating DOUBLE PRECISION,
 	description varchar(500)
 );

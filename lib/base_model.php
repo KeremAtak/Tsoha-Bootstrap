@@ -15,20 +15,20 @@
       }
     }
     
-    public function validate_string_length($string, $length) {
+    public function validate_string_length($string, $length, $name) {
         $errors = array();
         
         if(strlen($string) > $length){
-          $errors[] = 'Merkkijono on liian pitkä (max ' . $length . ' merkkiä.)';
+          $errors[] = $name . ' on liian pitkä (max ' . $length . ' merkkiä.)';
         }
         return $errors;
     }
     
-     public function string_not_null($string, $name) {
+    public function validate_string_length_shortness($string, $length, $name) {
         $errors = array();
         
-        if(strlen($string) == 0){
-          $errors[] = $name .' on liian lyhyt.';
+        if(strlen($string) < $length){
+          $errors[] = $name .' on liian lyhyt (vähintään ' . $length . ' merkkiä.)';
         }
         return $errors;
     }

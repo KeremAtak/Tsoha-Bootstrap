@@ -11,8 +11,8 @@
           return $alcoholic;
         }
 
-    return null;
-  }
+      return null;
+    }
 
     public static function login() {
         if (!Alcoholic::is_logged_in()) {
@@ -39,7 +39,7 @@
             Redirect::to('/', array('message' => 'Olet kirjautunut ulos.'));
         }
     }
-      
+    
     public static function register() {
         if (!Alcoholic::is_logged_in()) {
             View::make('register.html');
@@ -54,9 +54,13 @@
             'password' => $params['password']
         ));
         
-        $alcoholic->save();
+        $errors = $alcoholic->errors();
 
-        Redirect::to('/login');
+        if(count($errors) == 0){
+            $alcoholic->save();
+            Redirect::to('/login');
+        } else{
+          Redirect::to('/register', array('errors' => $errors, 'message' => 'Käyttäjän luonti epäonnistui.'));
+        }
     }
-    
   }

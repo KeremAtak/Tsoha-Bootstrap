@@ -25,12 +25,33 @@
   });
   
   $routes->get('/drinks', function() {
-    DrinkController::drinks();
+    DrinkController::drinks('name ASC');
+  });
+  
+  $routes->get('/drinks/alcohol', function() {
+    DrinkController::drinks('alcohol_percentage DESC');
+  });
+  
+  $routes->get('/drinks/rating', function() {
+    DrinkController::drinks('rating DESC');
+  });
+  
+  $routes->get('/drinks/volume', function() {
+    DrinkController::drinks('volume DESC');
   });
   
   $routes->get('/drinks/:id', function($id) {
     DrinkController::drink($id);
   });
+  
+  $routes->get('/drinks/:id/update', function($id) {
+    DrinkController::update_drink($id);
+  });
+  
+   $routes->post('/drinks/:id/update', function($id) {
+    DrinkController::update($id);
+  });
+  
   
   $routes->get('/drinks/:id/remove', function($id) {
     DrinkController::remove($id);
@@ -42,6 +63,14 @@
   
    $routes->get('/drinks/:id/reviews/review', function($id) {
       ReviewController::create_review($id);
+   });
+   
+   $routes->get('/drinks/:id/reviews/update', function($id) {
+      ReviewController::update_review($id);
+   });
+   
+   $routes->post('/drinks/:id/reviews/update', function($id) {
+      ReviewController::update($id);
    });
    
    $routes->get('/drinks/:id/reviews/:review_id', function($id, $review_id) {

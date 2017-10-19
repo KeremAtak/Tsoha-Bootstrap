@@ -1,0 +1,36 @@
+ {% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Drinkin {{drink.name}} arvostelun päivitys</h1>  
+    
+    <h1>{{message}}</h1>
+    
+    {% for error in errors %}
+        <h3>{{error}}</h3>
+    {% endfor %}
+        
+    <form method = "post">
+        <div class="form-group">
+          <label>Kuvaus</label>
+          <input type="text" name="description" value="{{review.description}}" class="form-control">
+        </div>
+        
+        <h4>Arvosana</h4>
+        <select name="rating">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        
+        <p>
+          <button type="submit" class="btn btn-primary">Luo</button>
+        </p>
+    </form>
+    
+    <a href="/tsoha/drinks/{{drink.id}}/reviews"><small>Takaisin arvosteluihin</small></a>
+
+    <a href="/tsoha"><small>Valikkoon</small></a>
+{% endblock %}

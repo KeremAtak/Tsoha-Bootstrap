@@ -4,7 +4,7 @@
         
     <h1>{{drink.name}}</h1>
 
-    <h3>Drinkin teki {{user.username}}</h3 >
+    <h3>Drinkin teki {{alcoholic.username}}</h3 >
     
     <h3>Arvosana: {{drink.rating}}</h3>
 
@@ -23,9 +23,11 @@
     
     <h5>{{drink.description}}</h5>
 
+    <a href="{{update_path}}"><h5>{{update_text}}</h5></a>
+    
     <a href="/tsoha/drinks/{{drink.id}}/reviews"><h5>Arvostelut</h5></a>
-
-     <a href="/tsoha/drinks/{{drink.id}}/remove"><h5>{{path_text}}</h5></a>
+    
+    <a href="/tsoha/drinks/{{drink.id}}/remove"><h5>{{path_text}}</h5></a>
 
     <a href="/tsoha/drinks"><small>Drinkkeihin</small></a>
 

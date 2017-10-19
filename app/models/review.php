@@ -50,6 +50,15 @@ class Review extends BaseModel{
         return $reviews;
     }
     
+    public static function find_reviewer_by_id($id){
+        $query = DB::connection()->prepare('SELECT reviewer FROM Review where id = :id');
+        $query->execute(array('id' => $id));
+        
+        $row = $query->fetch();
+        
+        return $row['reviewer'];
+    }
+    
     public static function user_logged_in_equals_reviewer($review_id){
         if(Alcoholic::get_user_logged_in() != null) {
             $user = Alcoholic::get_user_logged_in();
@@ -59,6 +68,27 @@ class Review extends BaseModel{
             }
         }
         return FALSE;
+    }
+    
+    public static function find_users_review($drink_id, $reviewer){
+        $query = DB::connection()->prepare('SELECT * FROM Review WHERE drink_id = :drink_id
+                                                AND reviewer = :reviewer');
+        $query->execute(array('drink_id' => $drink_id, 'reviewer' => $reviewer));
+        
+        $row = $query->fetch();
+        
+        if($row) {
+            $review = new Review(array(
+                'id' => $row['id'],
+                'alcoholic_id' => $row['alcoholic_id'],
+                'drink_id' => $row['drink_id'],
+                'reviewer' => $row['reviewer'],
+                'rating' => $row['rating'],
+                'description' => $row['description']
+            ));
+            return $review;
+        }
+        return null;
     }
     
     public function save(){
@@ -74,13 +104,24 @@ class Review extends BaseModel{
         $this->id = $row['id'];
     }
     
+    public function update(){
+        $query = DB::connection()->prepare('UPDATE Review SET rating = :rating, description = :description WHERE id = :id');
+
+        $query->execute(array('id' => $this->id, 'rating' => $this->rating, 'description' => $this->description));
+    }
+    
     public function remove(){
         $query = DB::connection()->prepare('DELETE FROM Review WHERE id = :id');
         $query->execute(array('id' => $this->id));
     }
     
+    public static function remove_by_drink_id($drink_id){
+        $query = DB::connection()->prepare('DELETE FROM Review WHERE drink_id = :drink_id');
+        $query->execute(array('drink_id' => $drink_id));
+    }
+    
     public function validate_description(){
-        return $this->validate_string_length($this->description, 1500);
+        return $this->validate_string_length($this->description, 1500, 'Kuvaus');
     }
     
     public function validate_reviewer(){
@@ -101,4 +142,5 @@ class Review extends BaseModel{
         }
         return $errors;
     }
+    
 }

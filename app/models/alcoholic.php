@@ -2,10 +2,11 @@
 
 class Alcoholic extends BaseModel{
     
-    public $id, $username, $password;
+    public $id, $username, $password, $validators;
 
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_unique_name', 'validate_name_length', 'validate_name_shortness', 'validate_password_length', 'validate_password_shortness');
     }
     
     public static function all() {
@@ -94,4 +95,33 @@ class Alcoholic extends BaseModel{
       }
       return FALSE;
     }
+    
+    public function validate_unique_name(){
+        $query = DB::connection()->prepare('SELECT * FROM Alcoholic WHERE username = :username');
+        $query->execute(array('username' => $this->username));
+        
+        $row = $query->fetch();
+        $errors = array();
+        if ($row) {
+            $errors[] = 'Käyttäjänimi on varattu.';
+        }
+        return $errors;
+    }
+    
+    public function validate_name_length(){
+        return $this->validate_string_length($this->username, 30, 'Käyttäjätunnus');
+    }
+    
+    public function validate_name_shortness(){
+        return $this->validate_string_length_shortness($this->username, 4, 'Käyttäjätunnus');
+    }
+    
+    public function validate_password_length(){
+        return $this->validate_string_length($this->password, 30, 'Salasana');
+    }
+    
+    public function validate_password_shortness(){
+        return $this->validate_string_length_shortness($this->password, 8, 'Salasana');
+    }
+    
 }

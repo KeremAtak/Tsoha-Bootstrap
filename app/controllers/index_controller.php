@@ -6,7 +6,7 @@
         $alcoholic = Alcoholic::get_user_logged_in();
         
         if(Alcoholic::is_logged_in()) {
-            $login_text = '/Kirjaudu ulos';
+            $login_text = 'Kirjaudu ulos';
             $login_path = '/tsoha/logout';
             
             $alcoholic = Alcoholic::get_user_logged_in();

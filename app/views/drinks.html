@@ -3,10 +3,19 @@
 {% block content %}
 <h1>Drinkit</h1>
     
+    <small>Lajittele</small>
+    <a href="/tsoha/drinks"><small>nimen</small></a>
+    <a href="/tsoha/drinks/alcohol"><small>alkoholiprosentin</small></a>
+    <a href="/tsoha/drinks/rating"><small>arvosanan</small></a>
+    <a href="/tsoha/drinks/volume"><small>tilavuuden</small></a>
+    <small>perusteella</small>
+    
+    <p></p>
+    
     {% for drink in drinks %}
         <p>
             <a href="/tsoha/drinks/{{drink.id}}">{{drink.name}}</a>
-            <small>Arvosana: {{drink.rating}}</small>
+            <small>As. {{drink.rating}}, til. {{drink.volume}}ml, alc. {{drink.alcohol_percentage}}%</small>
         </p>
     {% endfor %}
     

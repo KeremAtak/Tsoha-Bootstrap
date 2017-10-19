@@ -10,17 +10,49 @@
     public static function reviews($id){
         $reviews = Review::find_by_drink_id($id);
         $drink = Drink::single($id);
+        $review_text = '';
+        $review_path = '';
         
-        View::make('reviews.html', array('reviews' => $reviews, 'drink' => $drink));
+        if (Alcoholic::is_logged_in()) {
+            $alcoholic = Alcoholic::get_user_logged_in();
+            if(Review::find_users_review($id, $alcoholic->username) != null) {
+                $review_text = 'Päivitä arviosi';
+                $review_path = '/tsoha/drinks/'.$id.'/reviews/update';
+            } else {
+                $review_text = 'Luo arvio';
+                $review_path = '/tsoha/drinks/'.$id.'/reviews/review';
+            }
+        }
+        View::make('reviews.html', array('reviews' => $reviews, 'drink' => $drink, 'review_path' => $review_path, 'review_text' => $review_text));
     }
     
     public static function create_review($id){
         $drink = Drink::single($id);
+        $alcoholic = Alcoholic::get_user_logged_in();
+        $reviews = Review::find_by_drink_id($id);
         if(Alcoholic::get_user_logged_in() == NULL) {
-            $reviews = Review::find_by_drink_id($id);
-            View::make('reviews.html', array('reviews' => $reviews, 'drink' => $drink, 'error' => 'Kirjaudu sisään että pääset arvostelemaan drinkkiä!'));
+            Redirect::to('/login', array('message' => 'Kirjaudu sisään että pääset arvostelemaan drinkkiä!'));
+        } else if (Review::find_users_review($id, $alcoholic->username) != null){
+            $review = Review::find_users_review($id, $alcoholic->username);
+            Redirect::to('/drinks/'. $drink->id. '/reviews/update', array('drink' => $drink, 'review' => $review, 'message' => 'Olet jo luonut arvostelun drinkille. Voit päivittää sen tällä sivulla.'));
+        } else if (Drink::creator_equals_reviewer($id, $alcoholic->id)){    
+            Redirect::to('/drinks/'. $drink->id. '/reviews', array('reviews' => $reviews, 'drink' => $drink, 'message' => 'Et voi luoda arviota omalle drinkille!'));
         } else {
             View::make('review.html', array('drink' => $drink));
+        }
+    }
+    
+    public static function update_review($id) {
+        $drink = Drink::single($id);
+        $alcoholic = Alcoholic::get_user_logged_in();
+        if($alcoholic == null) {
+            Redirect::to('/login', array('message' => 'Kirjaudu sisään että pääset päivittämään arvostelusi!'));
+        }
+        $review = Review::find_users_review($drink->id, $alcoholic->username);
+        if ($review == null){
+            Redirect::to('/drinks/'. $drink->id. '/reviews/review', array('drink' => $drink, 'message' => 'Et ole luonut arviota, joten et voi päivittää sitä.'));
+        } else {
+            View::make('updatereview.html', array('drink' => $drink, 'review' => $review));
         }
     }
     
@@ -38,11 +70,11 @@
         $params = $_POST;
         
         $rating = strval($params['rating']);
-        $reviewer_object = Alcoholic::get_user_logged_in();
+        $alcoholic = Alcoholic::get_user_logged_in();
         
-        $reviewer = $reviewer_object->username;
         $drink = Drink::single($id);
-        $alcoholic_id = $drink->alcoholic_id;
+        $alcoholic_id = $alcoholic->id;
+        $reviewer = $alcoholic->username;
         
         $attributes = array(
             'alcoholic_id' => $alcoholic_id,
@@ -65,6 +97,39 @@
         }
     }
     
+    public static function update($drink_id) {
+        $params = $_POST;
+        
+        $rating = strval($params['rating']);
+        $alcoholic = Alcoholic::get_user_logged_in();
+        $drink = Drink::single($drink_id);
+        $alcoholic_id = $alcoholic->id;
+        $reviewer = $alcoholic->username;
+        $currentreview = Review::find_users_review($drink->id, $alcoholic->username);
+        $id = $currentreview->id;
+        
+        $attributes = array(
+            'id' => $id,
+            'alcoholic_id' => $alcoholic_id,
+            'drink_id' => $drink_id,
+            'reviewer' => $reviewer,
+            'rating' => $rating,
+            'description' => $params['description']
+        );
+        
+        $review = new Review($attributes);
+        $errors = $review->errors();
+
+        if(count($errors) == 0){
+          $review->update();
+          $drink->update_rating();
+          
+          Redirect::to('/drinks/' . $drink->id . '/reviews', array('message' => 'Arvostelusi on päivitetty.'));
+        }else{
+          Redirect::to('/drinks/' . $drink->id . '/reviews/review', array('errors' => $errors, 'message' => 'Arvostelun päivitys epäonnistui.'));
+        }
+    }
+    
     public static function remove($id, $review_id){
         $review = Review::single($review_id);
         $drink = Drink::single($id);
@@ -76,6 +141,6 @@
         
         $reviews = Review::find_by_drink_id($id);
         
-        View::make('reviews.html', array('reviews' => $reviews, 'drink' => $drink));
+        Redirect::to('/drinks/' . $id . '/reviews', array('reviews' => $reviews, 'drink' => $drink));
     }
   }
