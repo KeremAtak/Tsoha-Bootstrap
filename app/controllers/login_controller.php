@@ -1,8 +1,17 @@
 <?php
 
   require 'app/models/alcoholic.php';
+  
+  /**
+    * Kirjautumisen controller.
+    */
   class LoginController extends BaseController{
       
+      
+    /**
+      * Metodi palauttaa sisäänkirjautuneen käyttäjän. Metodi palauttaa null jos sivuston kävijä
+      * ei ole kirjautunut sisään.
+      */  
     public static function get_user_logged_in(){
         if (isset($_SESSION['user'])) {
           $id = $_SESSION['user'];
@@ -14,25 +23,33 @@
       return null;
     }
 
+    /**
+      * Metodi palauttaa näkymän kirjautumissivulle jos kävijä ei ole kirjautunut sisään.
+      */
     public static function login() {
         if (!Alcoholic::is_logged_in()) {
             View::make('login.html');
         }
     }
     
+    /**
+      * Metodissa kirjaudutaan sisään jos käyttäjätunnus ja salasana täsmäävät.
+      */
     public static function login_user(){
-    $params = $_POST;
+        $params = $_POST;
+        $alcoholic = Alcoholic::authenticate($params['username'], $params['password']);
 
-    $alcoholic = Alcoholic::authenticate($params['username'], $params['password']);
-
-    if(!$alcoholic){
-        View::make('login.html', array('error' => 'Väärä käyttäjätunnus tai salasana!', 'username' => $params['username']));
-    } else {
-        $_SESSION['user'] = $alcoholic->id;
-        Redirect::to('/');
-      }
+        if(!$alcoholic){
+          View::make('login.html', array('message' => 'Väärä käyttäjätunnus tai salasana!'));
+        } else {
+          $_SESSION['user'] = $alcoholic->id;
+          Redirect::to('/');
+        }
     }
     
+    /**
+      * Metodissa kirjaudutaan ulos jos kävijä on kirjautunut sisään.
+      */
     public static function logout(){
         if(Alcoholic::is_logged_in()) {
             $_SESSION['user'] = null;
@@ -40,12 +57,18 @@
         }
     }
     
+    /**
+      * Metodi palauttaa näkymän rekisteröitymissivulle jos kävijä ei ole kirjautunut sisään.
+      */
     public static function register() {
         if (!Alcoholic::is_logged_in()) {
             View::make('register.html');
         }
     }
-      
+    
+    /**
+      * Metodissa luodaan uusi käyttäjä. Syötteet validoidaan aluksi.
+      */
     public static function register_new_user() {
         $params = $_POST;
         

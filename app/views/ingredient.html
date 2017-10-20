@@ -9,6 +9,14 @@
     <h4>Kuvaus</h4>
     
     <h5>{{ingredient.description}}</h5>
+    
+    <h4>Drinkit</h4>
+    
+    {% for drink in drinks %}
+        <p>
+            <a href="/tsoha/drinks/{{drink.id}}">{{drink.name}}</a>
+        </p>
+    {% endfor %}
 
     <a href="/tsoha/ingredients"><small>Aineksiin</small></a>
 

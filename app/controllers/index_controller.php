@@ -1,7 +1,16 @@
 
 <?php
   require 'app/models/alcoholic.php';
+  
+  /**
+    * IndexController käsittelee indeksisivua.
+    */
   class IndexController extends BaseController{
+      
+    /**
+      * Metodi luo indeksisivun näkymään ja tuo näkymään erilaisia hyperlinkkejä riippuen
+      * siitä onko käyttäjä sisäänkirjautunut vai ei.
+      */
     public static function index(){
         $alcoholic = Alcoholic::get_user_logged_in();
         

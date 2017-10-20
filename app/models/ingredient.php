@@ -1,5 +1,8 @@
 <?php
 
+/**
+  * Ingredient on ainesosa joilla käyttäjä luo drinkin. Käyttäjät eivät voi luoda näitä.
+  */
 class Ingredient extends BaseModel{
     
     public $id, $name, $alcohol_percentage, $description;
@@ -8,15 +11,18 @@ class Ingredient extends BaseModel{
         parent::__construct($attributes);
     }
     
-    public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Ingredient ORDER BY name');
+    /**
+      * Metodi palauttaa kaikki ainesosat. Parametri $word päättää millaisessa järjestyksessä
+      * kysely palauttaa ainesosat käyttäjälle.
+      */
+    public static function all($word) {
+        $query = DB::connection()->prepare('SELECT * FROM Ingredient ORDER BY ' . $word);
         $query->execute();
         
         $rows = $query->fetchAll();
         $ingredients = array();
         
         foreach($rows as $row) {
-            
             $ingredients[] = new Ingredient(array(
                 'id' => $row['id'],
                 'name' => $row['name'],
@@ -26,8 +32,11 @@ class Ingredient extends BaseModel{
         }
         return $ingredients;
     }
-    
-     public static function single($id) {
+   
+    /**
+      * Metodi palauttaa yksittäisen ainesosan id:n perusteella.
+      */
+    public static function single($id) {
         $query = DB::connection()->prepare('SELECT * FROM Ingredient WHERE id = :id');
         $query->execute(array('id' => $id));
 
@@ -45,6 +54,9 @@ class Ingredient extends BaseModel{
         return null;
     }
     
+     /**
+      * Metodi palauttaa yksittäisen ainesosan nimen perusteella.
+      */
     public static function find_by_name($name) {
         $query = DB::connection()->prepare('SELECT * FROM Ingredient WHERE name = :name');
         $query->execute(array('name' => $name));
@@ -63,6 +75,9 @@ class Ingredient extends BaseModel{
         return null;
     }
     
+     /**
+      * Metodi palauttaa kaikki drinkin id:n liittyvät ainesosat.
+      */
     public static function find_by_drink_id($id){
         $query = DB::connection()->prepare('SELECT * 
                                             FROM Ingredient

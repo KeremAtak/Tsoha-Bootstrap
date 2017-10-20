@@ -2,7 +2,9 @@
 
 {% block content %}
 <h1>Käyttäjät</h1>
-   
+
+    <h3>{{message}}</h3>
+
     {% for user in users %}
         <p>
             <a href="/tsoha/users/{{user.id}}">{{user.username}}</a>

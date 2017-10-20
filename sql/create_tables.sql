@@ -13,7 +13,7 @@ CREATE TABLE Ingredient(
 
 CREATE TABLE Drink(
 	id SERIAL PRIMARY KEY,
-	alcoholic_id INTEGER REFERENCES Alcoholic(id),
+	alcoholic_id INTEGER REFERENCES Alcoholic(id) ON DELETE CASCADE,
 	name varchar(50) NOT NULL,
 	volume INTEGER,
 	alcohol_percentage DOUBLE PRECISION,
@@ -29,7 +29,7 @@ CREATE TABLE Ingredient_Drink(
 
 CREATE TABLE Review(
 	id SERIAL PRIMARY KEY,
-	alcoholic_id INTEGER REFERENCES Alcoholic(id),
+	alcoholic_id INTEGER REFERENCES Alcoholic(id) ON DELETE CASCADE,
 	drink_id INTEGER REFERENCES Drink(id) ON DELETE CASCADE,
 	reviewer varchar(30) NOT NULL,
 	rating INTEGER,

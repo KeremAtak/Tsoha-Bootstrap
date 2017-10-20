@@ -5,8 +5,16 @@
   require 'app/models/drink.php';
   require 'app/models/alcoholic.php';
 
+  /**
+    * Arvostelujen controller.
+    */
   class ReviewController extends BaseController{
 
+    /**
+      * Metodi luo näkymän missä listataan kaikki arvostelut liittyen tiettyyn drinkkiin.
+      * Jos käyttäjä on kirjautunut eikä ole drinkin luoja, hänelle annetaan hyperlinkit joko arvion
+      * luomiseen (jos hän ei ole luonut arviota) tai vastaavasti arvion päivittämiseen.
+      */
     public static function reviews($id){
         $reviews = Review::find_by_drink_id($id);
         $drink = Drink::single($id);
@@ -26,6 +34,11 @@
         View::make('reviews.html', array('reviews' => $reviews, 'drink' => $drink, 'review_path' => $review_path, 'review_text' => $review_text));
     }
     
+    /**
+      * Metodi luo näkymän missä luodaan arvio drinkille. Jos käyttäjä ei ole kirjautunut sisään hänet ohjataan
+      * kirjautumissivulle, päivityssivulle jos arvio on käyttäjän toimesta luotu tai takaisin arvostelujen
+      * listaukseen jos käyttäjä on drinkin luoja.
+      */
     public static function create_review($id){
         $drink = Drink::single($id);
         $alcoholic = Alcoholic::get_user_logged_in();
@@ -42,6 +55,11 @@
         }
     }
     
+    /**
+      * Metodi luo näkymän missä päivitetään drinkin arvostelu. Jos käyttäjä ei ole kirjautunut sisään hänet ohjataan
+      * kirjautumissivulle, luomissivulle jos arviota ei ole käyttäjän toimesta luotu tai takaisin arvostelujen
+      * listaukseen jos käyttäjä on drinkin luoja.
+      */
     public static function update_review($id) {
         $drink = Drink::single($id);
         $alcoholic = Alcoholic::get_user_logged_in();
@@ -55,7 +73,12 @@
             View::make('updatereview.html', array('drink' => $drink, 'review' => $review));
         }
     }
-    
+    /**
+      * Metodi luo näkymän yksittäiselle arvostelulle id:n perusteella ja tuo näkymään arvosteluun liittyvän
+      * drinkin.
+      * Jos arvostelu on sisäänkirjautuneen käyttäjän luoma niin näkymään tulee hyperlinkki arvosteluun
+      * poistamiseen.
+      */
     public static function single_review($id, $review_id){
         $drink = Drink::single($id);
         $review = Review::single($review_id);
@@ -65,7 +88,9 @@
         View::make('singlereview.html', array('review' => $review, 'drink' => $drink));
     }
     
-    
+    /**
+      * Metodi tallentaa arvostelun tietokantaan jos virheitä ei esiinny. Tällöin drinkin arvosana päivittyy.
+      */
     public static function store($id) {
         $params = $_POST;
         
@@ -97,6 +122,9 @@
         }
     }
     
+    /**
+      * Metodi päivittää arvostelun jos virheitä ei esiinny. Tällöin drinkin arvosana päivittyy.
+      */
     public static function update($drink_id) {
         $params = $_POST;
         
@@ -130,6 +158,10 @@
         }
     }
     
+    /**
+      * Metodi poistaa arvostelun tietokannasta jos sisäänkirjautunut käyttäjä on arvostelun luoja.
+      * Tällöin drinkin arvosana päivittyy. 
+      */
     public static function remove($id, $review_id){
         $review = Review::single($review_id);
         $drink = Drink::single($id);
@@ -140,7 +172,6 @@
         }
         
         $reviews = Review::find_by_drink_id($id);
-        
         Redirect::to('/drinks/' . $id . '/reviews', array('reviews' => $reviews, 'drink' => $drink));
     }
   }

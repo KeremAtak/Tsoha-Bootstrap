@@ -93,7 +93,11 @@
   });
   
   $routes->get('/ingredients', function() {
-      IngredientController::ingredients();
+      IngredientController::ingredients('name ASC');
+  });
+  
+  $routes->get('/ingredients/alcohol', function() {
+      IngredientController::ingredients('alcohol_percentage DESC');
   });
   
   $routes->get('/ingredients/:id', function($id) {
@@ -104,6 +108,10 @@
     UserController::users();
   });
   
-    $routes->get('/users/:id', function($id) {
+  $routes->get('/users/:id', function($id) {
     UserController::user($id);
+  });
+  
+  $routes->get('/users/:id/delete', function($id) {
+    UserController::delete($id);
   });

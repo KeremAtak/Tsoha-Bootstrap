@@ -6,18 +6,30 @@
   require 'app/models/alcoholic.php';
   require 'app/models/review.php';
   
+  /**
+    * Drinkkien controller.
+    */
   class DrinkController extends BaseController{
-
+      
+    /**
+      * Metodi luo näkymän missä listataan kaikki drinkit. Parametri $word päättää millaisessa järjestyksessä
+      * kysely palauttaa drinkit käyttäjälle.
+      */
     public static function drinks($word){
         $drinks = Drink::all($word);
         View::make('drinks.html', array('drinks' => $drinks));
     }
-        
+     
+    /**
+      * Metodi luo näkymän yksittäiselle drinkille id:n perusteella ja tuo näkymään drinkin luojan ja 
+      * ainekset.
+      * Jos drinkki on sisäänkirjautuneen käyttäjän luoma niin näkymään tulee hyperlinkit drinkin
+      * päivittämiseen ja poistamiseen. 
+      */
     public static function drink($id){
         $drink = Drink::single($id);
         $ingredients = Ingredient::find_by_drink_id($id);
         $alcoholic = Alcoholic::single($drink->alcoholic_id);
-        
         
         if(Drink::user_logged_in_equals_drink_creator($id)) {
             View::make('drink.html', array('drink' => $drink, 'ingredients' => $ingredients, 
@@ -27,16 +39,21 @@
         View::make('drink.html', array('drink' => $drink, 'ingredients' => $ingredients, 'alcoholic' => $alcoholic));
     }
         
-    
+    /**
+      * Metodi luo näkymän missä drinkki luodaan. Metodi aluksi tarkastaa onko käyttäjä kirjautunut sisään.
+      */
     public static function create_drink(){
         if(Alcoholic::is_logged_in()) {
-            $ingredients = Ingredient::all();
+            $ingredients = Ingredient::all('name ASC');
             View::make('create.html', array('ingredients' => $ingredients));
         } else {
             Redirect::to('/login');
         }
     }
     
+    /**
+      * Metodi tallentaa drinkin tietokantaan jos virheitä ei ilmene.
+      */
     public static function store(){
         $params = $_POST;
         
@@ -48,7 +65,7 @@
                                 Ingredient::find_by_name($params['ingredient4']),
                                 Ingredient::find_by_name($params['ingredient5']),
                                 Ingredient::find_by_name($params['ingredient6']));
-         
+        
         $oldvolumes = array($params['volume1'], $params['volume2'], $params['volume3'], $params['volume4'], $params['volume5'], $params['volume6']);
         $volume = 0;
                 
@@ -72,6 +89,7 @@
         $ingredients = array_values($oldingredients);
         $volumes = array_values($oldvolumes);
         
+        DrinkController::ingredient_not_included_twice($ingredients, '/create');
         
         $alcohol_percentage = 0;
         for ($i = 0; $i < count($volumes); $i++) {
@@ -116,6 +134,10 @@
         }
     }
     
+    /**
+      * Metodi päivittää drinkin jos virheitä ei esiinny. Drinkkiin liittyvät ainesosat ja arvostelut
+      * poistetaan.
+      */
     public static function update($id){
         $params = $_POST;
         
@@ -127,7 +149,7 @@
                                 Ingredient::find_by_name($params['ingredient4']),
                                 Ingredient::find_by_name($params['ingredient5']),
                                 Ingredient::find_by_name($params['ingredient6']));
-         
+        
         $oldvolumes = array($params['volume1'], $params['volume2'], $params['volume3'], $params['volume4'], $params['volume5'], $params['volume6']);
         $volume = 0;
                 
@@ -151,6 +173,8 @@
         $ingredients = array_values($oldingredients);
         $volumes = array_values($oldvolumes);
         
+        DrinkController::ingredient_not_included_twice($ingredients, '/drinks/' . $id .'/update');
+
         $alcohol_percentage = 0;
         for ($i = 0; $i < count($volumes); $i++) {
             $alcohol_percentage =  $alcohol_percentage + $ingredients[$i]->alcohol_percentage * ($volumes[$i] / $volume);
@@ -194,6 +218,9 @@
         }
     }
     
+    /**
+      * Metodi poistaa drinkin tietokannasta jos sisäänkirjautunut käyttäjä on drinkin luoja.
+      */
     public static function remove($id){
         $drink = Drink::single($id);
         
@@ -204,6 +231,9 @@
         Redirect::to('/drinks', array('message' => 'Et voi poistaa muiden drinkkejä!'));
     }
     
+    /**
+      * Metodi luo näkymän missä drinkki poistetaan jos sisäänkirjautunut käyttäjä on drinkin luoja.
+      */
     public static function update_drink($id){
         $drink = Drink::single($id);
         $alcoholic = Alcoholic::get_user_logged_in();
@@ -212,11 +242,14 @@
         } else if ($drink->alcoholic_id != $alcoholic->id) {
             Redirect::to('/drinks/'. $id.'', array('drink' => $drink, 'message' => 'Et voi päivittää muiden drinkkejä!'));
         } else {
-            $ingredients = Ingredient::all();
+            $ingredients = Ingredient::all('name ASC');
             View::make('updatedrink.html', array('drink' => $drink, 'ingredients' => $ingredients));
         }
     }
     
+    /**
+      * Metodi päivittää drinkin kokonaisarvosanan.
+      */
     public static function update_rating($id){
         $reviews = Review::find_by_drink_id($id);
         $drink = Drink::single($id);
@@ -228,5 +261,20 @@
         $rating = $rating / count(reviews);
 
         $drink->update_rating($rating);
+    }
+    
+    /**
+      * Metodi tarkastaa että samaa ainesosaa esiintyy drinkissä vain kerran.
+      */
+    public static function ingredient_not_included_twice($ingredients, $path) {
+        for ($i = 0; $i < count($ingredients); $i++) {
+            for ($j = 0; $j < count($ingredients); $j++) {
+                if ($j != $i) {
+                    if ($ingredients[$i] == $ingredients[$j]) {
+                        Redirect::to($path, array('message' => 'Et voi lisätä samaa ainesosaa useasti.'));
+                    }
+                }
+            }
+        }
     }
 }
